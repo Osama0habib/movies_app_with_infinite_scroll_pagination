@@ -12,6 +12,7 @@ class MovieDetails extends Equatable {
   final int runtime;
   final String title;
   final double voteAverage;
+  final String videoId;
 
   const MovieDetails({required this.backdropPath,
     required this.genres,
@@ -20,7 +21,8 @@ class MovieDetails extends Equatable {
     required this.releaseDate,
     required this.runtime,
     required this.title,
-    required this.voteAverage});
+    required this.voteAverage,
+    required this.videoId});
 
 
   @override
@@ -34,6 +36,7 @@ class MovieDetails extends Equatable {
         runtime,
         title,
         voteAverage,
+        videoId
       ];
 
 }
