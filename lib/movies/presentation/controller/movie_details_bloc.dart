@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/domain/entities/movie_details.dart';
 import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../domain/entities/recommendation.dart';
 import '../../domain/usecases/get_movie_recommendation_usecase.dart';
@@ -16,10 +17,13 @@ class MovieDetailsBloc extends  Bloc<MovieDetailsEvent, MovieDetailsState> {
   final GetMovieDetailsUseCase getMovieDetailsUseCase;
   final GetMovieRecommendationUseCase getMovieRecommendationUseCase;
 
+
   MovieDetailsBloc(this.getMovieDetailsUseCase, this.getMovieRecommendationUseCase) : super(const MovieDetailsState( )) {
     on<GetMovieDetailsEvent>(_getMovieDetails);
 
     on<GetMovieRecommendationEvent>(_getMovieRecommendation);
+
+
   }
 
   FutureOr<void> _getMovieDetails(GetMovieDetailsEvent event, Emitter<MovieDetailsState> emit)async {
@@ -40,5 +44,15 @@ class MovieDetailsBloc extends  Bloc<MovieDetailsEvent, MovieDetailsState> {
             movieRecommendationMessage: l.message)), (r) =>
         emit(state.copyWith(movieRecommendationState: RequestState.loaded,
             movieRecommendation: r)));
+  }
+
+  YoutubePlayerController _initializeYoutubePlayer(String id) {
+    return YoutubePlayerController(
+      initialVideoId: id,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: true,
+      ),
+    );
   }
 }
